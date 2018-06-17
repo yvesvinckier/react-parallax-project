@@ -10,14 +10,14 @@ class PenPage extends Component {
     componentDidMount() {
         TweenMax.set('.part3', { y: -572 })
         TweenMax.set('.part4', { y: -557 })
-        TweenMax.set('.part5', { y: -720 })
+        TweenMax.set('.part5', { y: -726 })
         TweenMax.set('.part6', { y: -846 })
-        TweenMax.set(['.parts h2, .parts p'], { autoAlpha: 0 });
+        // TweenMax.set(['.parts h2, .parts p'], { autoAlpha: 0 });
 
         const bodyToStart = TweenMax.to('.part3', 1, { y: 0, ease: "Linear.easeNone" })
         const part4ToStart = TweenMax.to('.part4', 1, { y: 0, ease: "Linear.easeNone" })
         const part5ToStart = TweenMax.to('.part5', 1, { y: 0, ease: "Linear.easeNone" })
-        // const part4ToStart = TweenMax.to('.part4', 1, { y: 0, ease: "Linear.easeNone" })
+        const part6ToStart = TweenMax.to('.part6', 1, { y: 0, ease: "Linear.easeNone" })
 
         // init ScrollMagic Controller
         const controller = new ScrollMagic.Controller();
@@ -33,26 +33,57 @@ class PenPage extends Component {
         .addIndicators()
         .addTo(controller)
 
-        const scene02 = new ScrollMagic.Scene({
+        // const scene02 = new ScrollMagic.Scene({
+        //     triggerElement: '.part3',
+        //     triggerHook: '1',
+        //     offset: 282,
+        //     duration: 557
+        // })
+        // .setTween(part4ToStart)
+        // .addIndicators()
+        // .addTo(controller)
+
+        const pt6Scene = new ScrollMagic.Scene({
             triggerElement: '.part3',
-            triggerHook: '1',
-            offset: 282,
+            triggerHook: '0',
+            offset: -200,
+            duration: 846
+        })
+        .setTween(part6ToStart)
+        .addIndicators()
+        .addTo(controller)
+
+        
+        const pt5Scene = new ScrollMagic.Scene({
+            triggerElement: '.part3',
+            triggerHook: '0',
+            offset: -200,
+            duration: 726
+        })
+        .setTween(part5ToStart)
+        .addIndicators()
+        .addTo(controller)
+
+        const pt4Scene = new ScrollMagic.Scene({
+            triggerElement: '.part3',
+            triggerHook: '0',
+            offset: -200,
             duration: 557
         })
         .setTween(part4ToStart)
         .addIndicators()
         .addTo(controller)
 
-        const scene03 = new ScrollMagic.Scene({
-            triggerElement: '.part3',
-            triggerHook: '1',
-            offset: 282,
-            duration: 720
-        })
-        .setTween(part5ToStart)
-        .addIndicators()
-        .addTo(controller)
-
+        const arrayLi = document.getElementsByClassName('parts')[0].getElementsByTagName("li");
+        // console.log(arrayLi[0].getElementsByTagName("li"));
+        [...arrayLi].map((item) => { 
+            const scene = new ScrollMagic.Scene({
+               triggerElement: item,
+               triggerHook: 0.55 
+            })
+            .setClassToggle(item, 'fade-in')
+            .addTo(controller);
+            console.log(item);})
     }
 
     render() {
